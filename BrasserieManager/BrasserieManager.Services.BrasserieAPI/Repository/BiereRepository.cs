@@ -1,9 +1,15 @@
 ﻿using BrasserieManager.Services.BrasserieAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrasserieManager.Services.BrasserieAPI.Repository
 {
     public class BiereRepository : IBiereRepository
     {
+        private readonly AppDbContext _appDbContext;
+        public BiereRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Task<Biere> CreateUpdateBiere(Biere biere)
         {
             throw new NotImplementedException();
@@ -14,14 +20,24 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Biere> GetBiereByIdAsync(int id)
+        public async Task<Biere> GetBiereByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _appDbContext.Biere
+                    .FirstOrDefaultAsync(b => b.BrasserieId == id);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Biere>> GetBieresAsync()
+        public async Task<IEnumerable<Biere>> GetBieresAsync()
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Biere
+                .Include(b => b.Brasserie)
+                .ToListAsync();
         }
     }
 }

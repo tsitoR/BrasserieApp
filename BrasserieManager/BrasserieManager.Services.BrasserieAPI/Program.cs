@@ -1,4 +1,5 @@
 using BrasserieManager.Services.BrasserieAPI.Models;
+using BrasserieManager.Services.BrasserieAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IBrasserieRepository, BrasserieRepository>();
+builder.Services.AddScoped<IBiereRepository, BiereRepository>();
 
 var app = builder.Build();
 

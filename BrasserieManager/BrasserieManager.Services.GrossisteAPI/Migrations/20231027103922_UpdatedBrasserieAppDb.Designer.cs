@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrasserieManager.Services.GrossisteAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231026233518_BrasseriesDb")]
-    partial class BrasseriesDb
+    [Migration("20231027103922_UpdatedBrasserieAppDb")]
+    partial class UpdatedBrasserieAppDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,7 +113,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasIndex("GrossisteId");
 
-                    b.ToTable("BiereGrossistes");
+                    b.ToTable("BiereGrossiste");
 
                     b.HasData(
                         new
@@ -139,7 +139,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasKey("GrossisteId");
 
-                    b.ToTable("Grossistes");
+                    b.ToTable("Grossiste");
 
                     b.HasData(
                         new

@@ -1,9 +1,15 @@
 ﻿using BrasserieManager.Services.BrasserieAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrasserieManager.Services.BrasserieAPI.Repository
 {
     public class BrasserieRepository : IBrasserieRepository
     {
+        private readonly AppDbContext _appDbContext;
+        public BrasserieRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         public Task<Brasserie> CreateUpdateBrasserie(Brasserie brasserie)
         {
             throw new NotImplementedException();
@@ -14,14 +20,22 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Brasserie> GetBrasserieByIdAsync(int id)
+        public async Task<Brasserie> GetBrasserieByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _appDbContext.Brasserie
+                    .FirstOrDefaultAsync(b => b.BrasserieId == id);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Brasserie>> GetBrasseriesAsync()
+        public async Task<IEnumerable<Brasserie>> GetBrasseriesAsync()
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Brasserie.ToListAsync();
         }
     }
 }

@@ -4,7 +4,7 @@
 
 namespace BrasserieManager.Services.GrossisteAPI.Migrations
 {
-    public partial class BrasseriesDb : Migration
+    public partial class UpdatedBrasserieAppDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Grossistes",
+                name: "Grossiste",
                 columns: table => new
                 {
                     GrossisteId = table.Column<int>(type: "int", nullable: false)
@@ -31,7 +31,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Grossistes", x => x.GrossisteId);
+                    table.PrimaryKey("PK_Grossiste", x => x.GrossisteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +57,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BiereGrossistes",
+                name: "BiereGrossiste",
                 columns: table => new
                 {
                     BiereGrossisteId = table.Column<int>(type: "int", nullable: false)
@@ -68,17 +68,17 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BiereGrossistes", x => x.BiereGrossisteId);
+                    table.PrimaryKey("PK_BiereGrossiste", x => x.BiereGrossisteId);
                     table.ForeignKey(
-                        name: "FK_BiereGrossistes_Biere_BiereId",
+                        name: "FK_BiereGrossiste_Biere_BiereId",
                         column: x => x.BiereId,
                         principalTable: "Biere",
                         principalColumn: "BiereId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BiereGrossistes_Grossistes_GrossisteId",
+                        name: "FK_BiereGrossiste_Grossiste_GrossisteId",
                         column: x => x.GrossisteId,
-                        principalTable: "Grossistes",
+                        principalTable: "Grossiste",
                         principalColumn: "GrossisteId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -94,7 +94,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 values: new object[] { 2, "Flying dodo" });
 
             migrationBuilder.InsertData(
-                table: "Grossistes",
+                table: "Grossiste",
                 columns: new[] { "GrossisteId", "Nom" },
                 values: new object[] { 1, "GeneDrinks" });
 
@@ -104,7 +104,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 values: new object[] { 1, 6.5, 1, "Leffe blonde", 1.5 });
 
             migrationBuilder.InsertData(
-                table: "BiereGrossistes",
+                table: "BiereGrossiste",
                 columns: new[] { "BiereGrossisteId", "BiereId", "GrossisteId", "Stock" },
                 values: new object[] { 1, 1, 1, 10 });
 
@@ -114,26 +114,26 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                 column: "BrasserieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BiereGrossistes_BiereId",
-                table: "BiereGrossistes",
+                name: "IX_BiereGrossiste_BiereId",
+                table: "BiereGrossiste",
                 column: "BiereId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BiereGrossistes_GrossisteId",
-                table: "BiereGrossistes",
+                name: "IX_BiereGrossiste_GrossisteId",
+                table: "BiereGrossiste",
                 column: "GrossisteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BiereGrossistes");
+                name: "BiereGrossiste");
 
             migrationBuilder.DropTable(
                 name: "Biere");
 
             migrationBuilder.DropTable(
-                name: "Grossistes");
+                name: "Grossiste");
 
             migrationBuilder.DropTable(
                 name: "Brasserie");

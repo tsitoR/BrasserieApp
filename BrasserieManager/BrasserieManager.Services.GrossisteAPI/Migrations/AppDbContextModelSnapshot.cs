@@ -111,7 +111,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasIndex("GrossisteId");
 
-                    b.ToTable("BiereGrossistes");
+                    b.ToTable("BiereGrossiste");
 
                     b.HasData(
                         new
@@ -137,7 +137,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasKey("GrossisteId");
 
-                    b.ToTable("Grossistes");
+                    b.ToTable("Grossiste");
 
                     b.HasData(
                         new
