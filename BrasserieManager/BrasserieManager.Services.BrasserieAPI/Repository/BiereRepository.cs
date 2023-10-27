@@ -44,6 +44,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
             try
             {
                 return await _appDbContext.Biere
+                    .Include(b => b.Brasserie)
                     .FirstOrDefaultAsync(b => b.BrasserieId == id);
             }
             catch { throw; }

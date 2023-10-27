@@ -1,21 +1,21 @@
-﻿using BrasserieManager.Services.BrasserieAPI.Models;
-using BrasserieManager.Services.BrasserieAPI.Repository;
+﻿
+using BrasserieManager.Services.GrossisteAPI.Models;
+using BrasserieManager.Services.GrossisteAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Net.Sockets;
 using Xunit;
 
-namespace BrasserieManager.Services.BrasserieAPI.RepositoryTest
+namespace BrasserieManager.Services.GrossisteAPI.RepositoryTest
 {
-    public class BrasserieRepositoryTest
+    public class GrossisteRepositoryTest
     {
         public static string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=BrasserieManager;Trusted_Connection=true;MultipleActiveResultSets=true";
-        public BrasserieRepositoryTest()
+        public GrossisteRepositoryTest()
         {
 
         }
         [Fact]
-        public async void BrasserieRepository_GetBrasserie_By_Id_Success()
+        public async void GrossisteRepository_GetGrossiste_By_Id_Success()
         {
             var serviceProvider = new ServiceCollection()
             .AddEntityFrameworkSqlServer()
@@ -24,12 +24,12 @@ namespace BrasserieManager.Services.BrasserieAPI.RepositoryTest
             builder.UseSqlServer(ConnectionString)
                     .UseInternalServiceProvider(serviceProvider);
             var context = new AppDbContext(builder.Options);
-            BrasserieRepository brasserieRepo = new(context);
-            var result = await brasserieRepo.GetBrasserieByIdAsync(1);
-            Assert.Equal("Abbaye de Leffe", result.Nom);
+            GrossisteRepository grossisteRepo = new(context);
+            var result = await grossisteRepo.GetGrossisteByIdAsync(1);
+            Assert.Equal("GeneDrinks", result.Nom);
         }
         [Fact]
-        public async void BrasserieRepository_GetBrasseries_Success()
+        public async void GrossisteRepository_GetGrossistes_Success()
         {
             var serviceProvider = new ServiceCollection()
             .AddEntityFrameworkSqlServer()
@@ -38,42 +38,42 @@ namespace BrasserieManager.Services.BrasserieAPI.RepositoryTest
             builder.UseSqlServer(ConnectionString)
                     .UseInternalServiceProvider(serviceProvider);
             var context = new AppDbContext(builder.Options);
-            BrasserieRepository brasserieRepo = new(context);
-            var result = await brasserieRepo.GetBrasseriesAsync();
+            GrossisteRepository grossisteRepo = new(context);
+            var result = await grossisteRepo.GetGrossistesAsync();
             Assert.True(result.Any());
         }
         [Fact]
-        public async void BrasserieRepository_CreateBrasserie_Success()
+        public async void GrossisteRepository_CreateGrossiste_Success()
         {
-            var mockSet = new Mock<DbSet<Brasserie>>();
+            var mockSet = new Mock<DbSet<Grossiste>>();
             var dbcontext = new Mock<AppDbContext>();
-            dbcontext.Setup(m => m.Brasserie).Returns(mockSet.Object);
+            dbcontext.Setup(m => m.Grossiste).Returns(mockSet.Object);
 
-            var repository = new BrasserieRepository(dbcontext.Object);
-            var result = await repository.CreateUpdateBrasserieAsync(new Brasserie
+            var repository = new GrossisteRepository(dbcontext.Object);
+            var result = await repository.CreateUpdateGrossisteAsync(new Grossiste
             {
-                BrasserieId = 0,
+                GrossisteId = 0,
                 Nom = "Heineken"
             });
-            Assert.True(result.BrasserieId == 0);
+            Assert.True(result.GrossisteId == 0);
         }
         [Fact]
-        public async void BrasserieRepository_DeleteBrasserie_Success()
+        public async void GrossisteRepository_DeleteGrossiste_Success()
         {
             var _options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
             using var context = new AppDbContext(_options);
-            context.Brasserie.Add(new Brasserie
+            context.Grossiste.Add(new Grossiste
             {
-                BrasserieId = 3,
-                Nom = "Heineken"
+                GrossisteId = 3,
+                Nom = "Unilever"
             });
             context.SaveChanges();
 
-            var repository = new BrasserieRepository(context);
-            var result = await repository.DeleteBrasserieAsync(3);
+            var repository = new GrossisteRepository(context);
+            var result = await repository.DeleteGrossisteAsync(3);
 
             Assert.True(result);
         }

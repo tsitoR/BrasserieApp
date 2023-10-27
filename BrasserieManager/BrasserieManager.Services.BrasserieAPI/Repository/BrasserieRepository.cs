@@ -21,10 +21,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
                 await _appDbContext.SaveChangesAsync();
                 return brasserie;
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
         public async Task<bool> DeleteBrasserieAsync(int id)
@@ -38,10 +35,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
         public async Task<Brasserie> GetBrasserieByIdAsync(int id)
@@ -51,10 +45,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
                 return await _appDbContext.Brasserie
                     .FirstOrDefaultAsync(b => b.BrasserieId == id);
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
         public async Task<IEnumerable<Brasserie>> GetBrasseriesAsync()

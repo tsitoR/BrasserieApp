@@ -8,7 +8,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Repository
         public Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesAsync();
         public Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesByGrossisteAsync(int idGrossiste);
         public Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesByBiereAsync(int idBiere);
-        public Task<bool> DeleteBiereGrossiste(int id);
-        public Task<BiereGrossiste> CreateUpdateBiereGrossiste(BiereGrossiste biereGrossiste);
+        public Task<bool> DeleteBiereGrossisteAsync(int id);
+        public Task<BiereGrossiste> CreateUpdateBiereGrossisteAsync(BiereGrossiste biereGrossiste);
     }
 }

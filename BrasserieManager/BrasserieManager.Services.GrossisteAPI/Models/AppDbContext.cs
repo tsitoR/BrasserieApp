@@ -5,8 +5,10 @@ namespace BrasserieManager.Services.GrossisteAPI.Models
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Grossiste> Grossiste { get; set; }
-        public DbSet<BiereGrossiste> BiereGrossiste { get; set; }
+        private DbSet<Grossiste> grossiste;
+        private DbSet<BiereGrossiste> biereGrossiste;
+        public virtual DbSet<Grossiste> Grossiste { get => grossiste; set => grossiste = value; }
+        public virtual DbSet<BiereGrossiste> BiereGrossiste { get => biereGrossiste; set => biereGrossiste = value; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             Grossiste = Set<Grossiste>();
