@@ -10,14 +10,38 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
         {
             _appDbContext = appDbContext;
         }
-        public Task<Brasserie> CreateUpdateBrasserie(Brasserie brasserie)
+        public async Task<Brasserie> CreateUpdateBrasserieAsync(Brasserie brasserie)
         {
-            throw new NotImplementedException();
+            try
+            { 
+                if (brasserie.BrasserieId > 0)
+                    _appDbContext.Brasserie.Update(brasserie);
+                else
+                    _appDbContext.Brasserie.Add(brasserie);
+                await _appDbContext.SaveChangesAsync();
+                return brasserie;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public Task<bool> DeleteBrasserie(int id)
+        public async Task<bool> DeleteBrasserieAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Brasserie? brasserie = await GetBrasserieByIdAsync(id);
+                if (brasserie == null)
+                    return false;
+                _appDbContext.Remove(brasserie);
+                await _appDbContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<Brasserie> GetBrasserieByIdAsync(int id)
@@ -35,7 +59,12 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
 
         public async Task<IEnumerable<Brasserie>> GetBrasseriesAsync()
         {
-            return await _appDbContext.Brasserie.ToListAsync();
+            try
+            {
+                return await _appDbContext.Brasserie
+                .ToListAsync();
+            }
+            catch { throw; }
         }
     }
 }

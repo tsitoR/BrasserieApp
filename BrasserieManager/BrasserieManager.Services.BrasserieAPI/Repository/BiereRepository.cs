@@ -10,14 +10,33 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
         {
             _appDbContext = appDbContext;
         }
-        public Task<Biere> CreateUpdateBiere(Biere biere)
+        public async Task<Biere> CreateUpdateBiereAsync(Biere biere)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (biere.BrasserieId > 0)
+                    _appDbContext.Biere.Update(biere);
+                else
+                    _appDbContext.Biere.Add(biere);
+                await _appDbContext.SaveChangesAsync();
+                return biere;
+            }
+            catch { throw; }
         }
 
-        public Task<bool> DeleteBiere(int id)
+        public async Task<bool> DeleteBiereAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Biere? biere = await _appDbContext.Biere
+                    .FirstOrDefaultAsync(b => b.BiereId == id);
+                if (biere == null)
+                    return false;
+                _appDbContext.Remove(biere);
+                await _appDbContext.SaveChangesAsync();
+                return true;
+            }
+            catch { throw; }
         }
 
         public async Task<Biere> GetBiereByIdAsync(int id)
@@ -27,17 +46,18 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
                 return await _appDbContext.Biere
                     .FirstOrDefaultAsync(b => b.BrasserieId == id);
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
         public async Task<IEnumerable<Biere>> GetBieresAsync()
         {
-            return await _appDbContext.Biere
+            try
+            {
+                return await _appDbContext.Biere
                 .Include(b => b.Brasserie)
                 .ToListAsync();
+            }
+            catch { throw;  }
         }
     }
 }

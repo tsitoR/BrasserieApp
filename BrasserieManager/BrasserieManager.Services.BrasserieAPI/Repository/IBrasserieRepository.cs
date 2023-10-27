@@ -6,7 +6,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
     {
         public Task<Brasserie> GetBrasserieByIdAsync(int id);
         public Task<IEnumerable<Brasserie>> GetBrasseriesAsync();
-        public Task<bool> DeleteBrasserie(int id);
-        public Task<Brasserie> CreateUpdateBrasserie(Brasserie brasserie);
+        public Task<bool> DeleteBrasserieAsync(int id);
+        public Task<Brasserie> CreateUpdateBrasserieAsync(Brasserie brasserie);
     }
 }
