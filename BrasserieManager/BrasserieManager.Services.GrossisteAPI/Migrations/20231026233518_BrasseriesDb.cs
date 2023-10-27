@@ -4,7 +4,7 @@
 
 namespace BrasserieManager.Services.GrossisteAPI.Migrations
 {
-    public partial class GrossisteModelsDb : Migration
+    public partial class BrasseriesDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,6 +82,31 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                         principalColumn: "GrossisteId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Brasserie",
+                columns: new[] { "BrasserieId", "Nom" },
+                values: new object[] { 1, "Abbaye de Leffe" });
+
+            migrationBuilder.InsertData(
+                table: "Brasserie",
+                columns: new[] { "BrasserieId", "Nom" },
+                values: new object[] { 2, "Flying dodo" });
+
+            migrationBuilder.InsertData(
+                table: "Grossistes",
+                columns: new[] { "GrossisteId", "Nom" },
+                values: new object[] { 1, "GeneDrinks" });
+
+            migrationBuilder.InsertData(
+                table: "Biere",
+                columns: new[] { "BiereId", "Alcool", "BrasserieId", "Nom", "Prix" },
+                values: new object[] { 1, 6.5, 1, "Leffe blonde", 1.5 });
+
+            migrationBuilder.InsertData(
+                table: "BiereGrossistes",
+                columns: new[] { "BiereGrossisteId", "BiereId", "GrossisteId", "Stock" },
+                values: new object[] { 1, 1, 1, 10 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Biere_BrasserieId",

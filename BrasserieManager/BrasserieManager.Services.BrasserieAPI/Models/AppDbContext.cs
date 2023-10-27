@@ -17,10 +17,5 @@ namespace BrasserieManager.Services.BrasserieAPI.Models
             Brasseries = Set<Brasserie>();
             Bieres = Set<Biere>();
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-        }
     }
 }
