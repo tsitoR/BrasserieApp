@@ -1,5 +1,4 @@
-﻿using BrasserieManager.Services.BrasserieAPI.Models;
-using BrasserieManager.Services.GrossisteAPI.Models;
+﻿using BrasserieManager.Services.GrossisteAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using AppDbContext = BrasserieManager.Services.GrossisteAPI.Models.AppDbContext;
 
