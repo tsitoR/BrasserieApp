@@ -14,7 +14,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
         {
             try
             {
-                if (biere.BrasserieId > 0)
+                if (biere.BiereId > 0)
                     _appDbContext.Biere.Update(biere);
                 else
                     _appDbContext.Biere.Add(biere);
@@ -45,7 +45,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
             {
                 return await _appDbContext.Biere
                     .Include(b => b.Brasserie)
-                    .FirstOrDefaultAsync(b => b.BrasserieId == id);
+                    .FirstOrDefaultAsync(b => b.BiereId == id);
             }
             catch { throw; }
         }
