@@ -54,6 +54,23 @@ namespace BrasserieManager.Services.GrossisteAPI.Controllers
             }
             return _result;
         }
+        [HttpPost]
+        [Route("byGrossiste/{id}")]
+        public async Task<Object> GetByGrossisteId([FromForm] int id)
+        {
+            try
+            {
+                IEnumerable<BiereGrossiste> result = await _biereGrossisteRepository.GetBiereGrossistesByGrossisteAsync(id);
+                _result.Result = _mapper.Map<IEnumerable<BiereGrossisteDetailsDto>>(result);
+            }
+            catch (Exception e)
+            {
+                _result.IsSuccess = false;
+                _result.ErrorMessages
+                     = new List<string>() { e.ToString() };
+            }
+            return _result;
+        }
 
         [HttpPost]
         public async Task<Object> Post([FromForm] BiereGrossisteDto biereGrossisteDto)

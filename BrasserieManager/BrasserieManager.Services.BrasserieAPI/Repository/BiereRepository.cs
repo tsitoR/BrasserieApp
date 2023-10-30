@@ -60,5 +60,16 @@ namespace BrasserieManager.Services.BrasserieAPI.Repository
             }
             catch { throw;  }
         }
+        public async Task<IEnumerable<Biere>> GetBiereByBrasserieAsync(int idBrasserie)
+        {
+            try
+            {
+                return await _appDbContext.Biere
+                    .Include(b => b.Brasserie)
+                    .Where(b => b.BrasserieId == idBrasserie)
+                    .ToListAsync();
+            }
+            catch { throw; }
+        }
     }
 }

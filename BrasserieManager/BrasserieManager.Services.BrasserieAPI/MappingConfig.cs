@@ -14,6 +14,8 @@ namespace BrasserieManager.Services.BrasserieAPI
                 config.CreateMap<Brasserie, BrasserieDto>();
                 config.CreateMap<BiereDto, Biere>();
                 config.CreateMap<Biere, BiereDto>();
+                config.CreateMap<Biere, BiereDetailsDto>()
+                .ForMember(dest => dest.Brasserie, opt => opt.MapFrom(src => src.Brasserie.Nom));
             });
 
             return mappingConfig;

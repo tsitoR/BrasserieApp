@@ -64,14 +64,18 @@ namespace BrasserieManager.Services.GrossisteAPI.Repository
             catch { throw; }
         }
 
-        public Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesByBiereAsync(int idBiere)
+        public async Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesByGrossisteAsync(int idGrossiste)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<BiereGrossiste>> GetBiereGrossistesByGrossisteAsync(int idGrossiste)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                return await _appDbContext.BiereGrossiste
+                    .Include(b => b.Grossiste)
+                    .Include(b => b.Biere)
+                    .Include(b => b.Biere.Brasserie)
+                    .Where(b => b.GrossisteId == idGrossiste)
+                    .ToListAsync();
+            }
+            catch { throw; }
         }
     }
 }

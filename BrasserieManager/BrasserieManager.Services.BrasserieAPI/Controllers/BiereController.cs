@@ -26,7 +26,7 @@ namespace BrasserieManager.Services.BrasserieAPI.Controllers
             try
             {
                 IEnumerable<Biere> bieres = await _biereRepository.GetBieresAsync();
-                _result.Result = _mapper.Map<List<BiereDto>>(bieres);
+                _result.Result = _mapper.Map<List<BiereDetailsDto>>(bieres);
             }
             catch (Exception ex)
             {
@@ -45,6 +45,23 @@ namespace BrasserieManager.Services.BrasserieAPI.Controllers
             {
                 Biere result = await _biereRepository.GetBiereByIdAsync(id);
                 _result.Result = _mapper.Map<BiereDto>(result);
+            }
+            catch (Exception e)
+            {
+                _result.IsSuccess = false;
+                _result.ErrorMessages
+                     = new List<string>() { e.ToString() };
+            }
+            return _result;
+        }
+        [HttpPost]
+        [Route("byBrasserie/{id}")]
+        public async Task<Object> GetByBrasserieId([FromForm] int id)
+        {
+            try
+            {
+                IEnumerable<Biere> result = await _biereRepository.GetBiereByBrasserieAsync(id);
+                _result.Result = _mapper.Map<IEnumerable<BiereDetailsDto>>(result);
             }
             catch (Exception e)
             {
