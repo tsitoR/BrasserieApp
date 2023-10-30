@@ -47,6 +47,16 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                     b.HasIndex("BrasserieId");
 
                     b.ToTable("Biere");
+
+                    b.HasData(
+                        new
+                        {
+                            BiereId = 1,
+                            Alcool = 6.5,
+                            BrasserieId = 1,
+                            Nom = "Leffe blonde",
+                            Prix = 1.5
+                        });
                 });
 
             modelBuilder.Entity("BrasserieManager.Services.BrasserieAPI.Models.Brasserie", b =>
@@ -64,6 +74,18 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
                     b.HasKey("BrasserieId");
 
                     b.ToTable("Brasserie");
+
+                    b.HasData(
+                        new
+                        {
+                            BrasserieId = 1,
+                            Nom = "Abbaye de Leffe"
+                        },
+                        new
+                        {
+                            BrasserieId = 2,
+                            Nom = "Flying dodo"
+                        });
                 });
 
             modelBuilder.Entity("BrasserieManager.Services.GrossisteAPI.Models.BiereGrossiste", b =>
@@ -89,7 +111,16 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasIndex("GrossisteId");
 
-                    b.ToTable("BiereGrossistes");
+                    b.ToTable("BiereGrossiste");
+
+                    b.HasData(
+                        new
+                        {
+                            BiereGrossisteId = 1,
+                            BiereId = 1,
+                            GrossisteId = 1,
+                            Stock = 10
+                        });
                 });
 
             modelBuilder.Entity("BrasserieManager.Services.GrossisteAPI.Models.Grossiste", b =>
@@ -106,7 +137,14 @@ namespace BrasserieManager.Services.GrossisteAPI.Migrations
 
                     b.HasKey("GrossisteId");
 
-                    b.ToTable("Grossistes");
+                    b.ToTable("Grossiste");
+
+                    b.HasData(
+                        new
+                        {
+                            GrossisteId = 1,
+                            Nom = "GeneDrinks"
+                        });
                 });
 
             modelBuilder.Entity("BrasserieManager.Services.BrasserieAPI.Models.Biere", b =>

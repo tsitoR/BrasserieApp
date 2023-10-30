@@ -5,18 +5,55 @@ namespace BrasserieManager.Services.GrossisteAPI.Models
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Grossiste> Grossistes { get; set; }
-        public DbSet<BiereGrossiste> BiereGrossistes { get; set; }
+        private DbSet<Grossiste> grossiste;
+        private DbSet<BiereGrossiste> biereGrossiste;
+        public virtual DbSet<Grossiste> Grossiste { get => grossiste; set => grossiste = value; }
+        public virtual DbSet<BiereGrossiste> BiereGrossiste { get => biereGrossiste; set => biereGrossiste = value; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            Grossistes = Set<Grossiste>();
-            BiereGrossistes = Set<BiereGrossiste>();
+            Grossiste = Set<Grossiste>();
+            BiereGrossiste = Set<BiereGrossiste>();
         }
 
         public AppDbContext()
         {
-            Grossistes = Set<Grossiste>();
-            BiereGrossistes = Set<BiereGrossiste>();
+            Grossiste = Set<Grossiste>();
+            BiereGrossiste = Set<BiereGrossiste>();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Brasserie>().HasData(new Brasserie
+            {
+                BrasserieId = 1,
+                Nom = "Abbaye de Leffe"
+            });
+            modelBuilder.Entity<Brasserie>().HasData(new Brasserie
+            {
+                BrasserieId = 2,
+                Nom = "Flying dodo"
+            });
+            modelBuilder.Entity<Biere>().HasData(new Biere
+            {
+                BiereId = 1,
+                Nom = "Leffe blonde",
+                Alcool = 6.5,
+                Prix = 1.5,
+                BrasserieId = 1
+            });
+            modelBuilder.Entity<Grossiste>().HasData(new Grossiste { 
+                GrossisteId = 1, 
+                Nom = "GeneDrinks" 
+            });
+            modelBuilder.Entity<BiereGrossiste>().HasData(new BiereGrossiste
+            {
+                BiereGrossisteId = 1,
+                BiereId = 1,
+                GrossisteId = 1,
+                Stock = 10
+            });
         }
     }
 }

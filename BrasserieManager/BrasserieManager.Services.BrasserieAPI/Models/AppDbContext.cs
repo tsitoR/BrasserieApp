@@ -4,23 +4,20 @@ namespace BrasserieManager.Services.BrasserieAPI.Models
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Brasserie> Brasseries { get; set; }
-        public DbSet<Biere> Bieres { get; set; }
+        private DbSet<Brasserie> brasserie { get; set; }
+        private DbSet<Biere> biere { get; set; }
+        public virtual DbSet<Brasserie> Brasserie { get => brasserie; set => brasserie = value; }
+        public virtual DbSet<Biere> Biere { get => biere; set => biere = value; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            Brasseries = Set<Brasserie>();
-            Bieres = Set<Biere>();
+            brasserie = Set<Brasserie>();
+            biere = Set<Biere>();
         }
 
         public AppDbContext()
         {
-            Brasseries = Set<Brasserie>();
-            Bieres = Set<Biere>();
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
+            brasserie = Set<Brasserie>();
+            biere = Set<Biere>();
         }
     }
 }
