@@ -4,6 +4,8 @@ using BrasserieManager.Services.GrossisteAPI.Models;
 using BrasserieManager.Services.GrossisteAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BrasserieManager.Services.GrossisteAPI.Services;
+using BrasserieManager.Services.BrasserieAPI.Repository;
 
 namespace BrasserieManager.Services.GrossisteAPI.Controllers
 {
@@ -13,11 +15,13 @@ namespace BrasserieManager.Services.GrossisteAPI.Controllers
     {
         protected ResultDto _result;
         private readonly IBiereGrossisteRepository _biereGrossisteRepository;
+        private readonly IBiereRepository _biereRepository;
         private readonly IMapper _mapper;
-        public BiereGrossisteController(IBiereGrossisteRepository biereGrossisteRepository, IMapper mapper)
+        public BiereGrossisteController(IBiereGrossisteRepository biereGrossisteRepository, IBiereRepository biereRepository, IMapper mapper)
         {
             _result = new ResultDto();
             _biereGrossisteRepository = biereGrossisteRepository;
+            _biereRepository = biereRepository;
             _mapper = mapper;
         }
         [HttpGet]
@@ -68,6 +72,33 @@ namespace BrasserieManager.Services.GrossisteAPI.Controllers
                 _result.IsSuccess = false;
                 _result.ErrorMessages
                      = new List<string>() { e.ToString() };
+            }
+            return _result;
+        }
+
+        [HttpPost]
+        [Route("commande")]
+        public async Task<Object> PostCommande([FromBody] CommandeDto commandeDto)
+        {
+            try
+            {
+                CommandeService cs = new(_biereGrossisteRepository, _biereRepository);
+                Commande commande = _mapper.Map<Commande>(commandeDto);
+                IEnumerable<BiereGrossiste> biereGrossistes = await _biereGrossisteRepository.GetBiereGrossistesByGrossisteAsync(commandeDto.GrossisteId);
+                IEnumerable<BiereCommande> biereCommandes = _mapper.Map<IEnumerable<BiereCommande>>(commandeDto.BiereCommandes);
+                var result = await cs.DevisCommande(biereCommandes, commandeDto.GrossisteId, commande, biereGrossistes);
+                _result.Result = new
+                {
+                    commandeDetails = commande,
+                    listCommande = biereCommandes,
+                    commandeStatus = result
+                };
+            }
+            catch (Exception ex)
+            {
+                _result.IsSuccess = false;
+                _result.ErrorMessages
+                     = new List<string>() { ex.ToString() };
             }
             return _result;
         }

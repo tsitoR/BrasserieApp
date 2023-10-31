@@ -18,6 +18,8 @@ namespace BrasserieManager.Services.GrossisteAPI
                 .ForMember(dest => dest.Biere, opt => opt.MapFrom(src => src.Biere.Nom))
                 .ForMember(dest => dest.Grossiste, opt => opt.MapFrom(src => src.Grossiste.Nom))
                 .ForMember(dest => dest.Brasserie, opt => opt.MapFrom(src => src.Biere.Brasserie.Nom));
+                config.CreateMap<BiereCommandeDto, BiereCommande>();
+                config.CreateMap<CommandeDto, Commande>();
             });
 
             return mappingConfig;
