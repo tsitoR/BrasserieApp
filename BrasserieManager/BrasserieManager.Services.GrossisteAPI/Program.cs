@@ -1,5 +1,4 @@
 using AutoMapper;
-using BrasserieManager.Services.BrasserieAPI.Repository;
 using BrasserieManager.Services.GrossisteAPI;
 using BrasserieManager.Services.GrossisteAPI.Models;
 using BrasserieManager.Services.GrossisteAPI.Repository;
@@ -25,12 +24,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddDbContext<BrasserieManager.Services.BrasserieAPI.Models.AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IGrossisteRepository, GrossisteRepository>();
 builder.Services.AddScoped<IBiereGrossisteRepository, BiereGrossisteRepository>();
+builder.Services.AddScoped<BrasserieManager.Services.BrasserieAPI.Repository.IBiereRepository, BrasserieManager.Services.BrasserieAPI.Repository.BiereRepository>();
 
 var app = builder.Build();
 

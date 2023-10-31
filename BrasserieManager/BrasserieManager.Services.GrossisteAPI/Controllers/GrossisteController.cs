@@ -4,6 +4,7 @@ using BrasserieManager.Services.GrossisteAPI.Models;
 using BrasserieManager.Services.GrossisteAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BrasserieManager.Services.GrossisteAPI.Services;
 
 namespace BrasserieManager.Services.GrossisteAPI.Controllers
 {
@@ -20,6 +21,7 @@ namespace BrasserieManager.Services.GrossisteAPI.Controllers
             _grossisteRepository = grossisteRepository;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<Object> Get()
         {
@@ -90,7 +92,6 @@ namespace BrasserieManager.Services.GrossisteAPI.Controllers
             }
             return _result;
         }
-
 
         [HttpDelete]
         [Route("{id}")]
